@@ -184,7 +184,7 @@ class QuotesController extends BaseController {
         $titulos["title"] = "Nueva Cotizacion"; //lang('registerNew.title');
         $titulos["subtitle"] = "Captura de Cotizaciones"; // lang('registerNew.subtitle');
 
-        return view('newQuote', $titulos);
+        return view('julio101290\boilerplatequotes\Views\newQuote', $titulos);
     }
 
     /**
