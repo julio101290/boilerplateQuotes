@@ -314,7 +314,7 @@ class QuotesController extends BaseController {
         $titulos["title"] = "Editar Cotizacion";
         $titulos["subtitle"] = "Edición de cotizaciones";
 
-        return view('newQuote', $titulos);
+        return view('julio101290\boilerplatequotes\Views\newQuote', $titulos);
     }
 
     public function convertQuote($uuid) {
@@ -401,7 +401,7 @@ class QuotesController extends BaseController {
         $titulos["title"] = "Generar Venta";
         $titulos["subtitle"] = "Convierte cotización a venta";
 
-        return view('newSell', $titulos);
+        return view('julio101290\boilerplatesells\Views\newSell', $titulos);
     }
 
     /*
