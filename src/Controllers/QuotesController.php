@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers;
+namespace julio101290\boilerplatequotes\Controllers;
 
 use App\Controllers\BaseController;
 use App\Database\Migrations\Storages;
