@@ -709,7 +709,7 @@ class QuotesController extends BaseController {
      */
     public function report($uuid, $isMail = 0) {
 
-        $pdf = new PDFLayout(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        $pdf = new PDFLayoutQuotes(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
         $dataQuote = $this->Quotes->where("uuid", $uuid)->first();
 
