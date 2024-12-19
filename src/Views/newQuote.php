@@ -10,8 +10,8 @@
 <?= $this->include('julio101290\boilerplatequotes\Views\modulesQuotes/dataHeadQuotes') ?>
 <?= $this->include('julio101290\boilerplatequotes\Views\modulesQuotes/productosModalQuotes') ?>
 <?= $this->include('julio101290\boilerplatequotes\Views\modulesQuotes/moreInfoRow') ?>
-<?= $this->include('julio101290\boilerplatequotes\Views\modulesProducts/modalCaptureProducts') ?>
-<?= $this->include('julio101290\boilerplatequotes\Views\modulesCustumers/modalCaptureCustumers') ?>
+<?= $this->include('julio101290\boilerplateproducts\Views\modulesProducts/modalCaptureProducts') ?>
+<?= $this->include('julio101290\boilerplatecustumers\Views\modulesCustumers/modalCaptureCustumers') ?>
 
 
 
