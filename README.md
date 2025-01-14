@@ -24,6 +24,8 @@ CodeIgniter4 Boilerplatequotes library to generate quotes with PDF print format 
   	composer require julio101290/boilerplatestorages
 
 	composer require julio101290/boilerplatetypesmovement
+ 
+ 	composer require julio101290/boilerplatequotes
 
 ### Run command for migration and seeder
 
@@ -34,7 +36,8 @@ CodeIgniter4 Boilerplatequotes library to generate quotes with PDF print format 
   	php spark boilerplatestorages:installstorages
 
 	php spark boilerplatetypesmovement:installtypesmovement
-	
+
+ 	php spark boilerplatequotes:installquotes
 
 # Make the Menu, Example
 
