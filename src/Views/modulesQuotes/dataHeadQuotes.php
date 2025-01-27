@@ -4,7 +4,7 @@
 
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Encabezado</h3>
+                <h3 class="card-title"><?= lang("newQuote.header") ?></h3>
 
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -21,17 +21,17 @@
 
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="generales-tab" data-toggle="tab" data-target="#generales" type="button" role="tab" aria-controls="generales" aria-selected="true">Generales</button>
+                        <button class="nav-link active" id="generales-tab" data-toggle="tab" data-target="#generales" type="button" role="tab" aria-controls="generales" aria-selected="true"><?= lang("newQuote.generals") ?></button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="profile-tab" data-toggle="tab" data-target="#otrosDatos" type="button" role="tab" aria-controls="otrosDatos" aria-selected="false">Otros
-                            Datos</button>
+                        <button class="nav-link" id="profile-tab" data-toggle="tab" data-target="#otrosDatos" type="button" role="tab" aria-controls="otrosDatos" aria-selected="false">
+                            <?= lang("newQuote.others") ?></button>
 
                     </li>
 
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="profile-tab" data-toggle="tab" data-target="#facturacionMX" type="button" role="tab" aria-controls="facturacionMX" aria-selected="false">
-                            Facturación MX
+                            <?= lang("newQuote.invoiceMX") ?>
                         </button>
                     </li>
 
@@ -101,12 +101,12 @@
                                     <!--=====================================
                                     ENCABEZADO
                                     ======================================-->
-                                    <div class="col-1"> # </div>
-                                    <div class="col-1"> Codigo </div>
-                                    <div class="col-7"> Descripción </div>
-                                    <div class="col-1">Cantidad </div>
-                                    <div class="col-1">Precio </div>
-                                    <div class="col-1">Total </div>
+                                    <div class="col-1"> <?= lang("newQuote.fields.row") ?> </div>
+                                    <div class="col-1"> <?= lang("newQuote.fields.code") ?></div>
+                                    <div class="col-7"> <?= lang("newQuote.fields.description") ?> </div>
+                                    <div class="col-1"> <?= lang("newQuote.fields.amount") ?> </div>
+                                    <div class="col-1"> <?= lang("newQuote.fields.price") ?> </div>
+                                    <div class="col-1"> <?= lang("newQuote.fields.total") ?> </div>
 
 
                                 </div>
@@ -159,13 +159,13 @@
 
                                                 $value["unidad"] = "";
                                             }
-                                            
-                                            
+
+
                                             if (!isset($value["idAlmacen"])) {
 
                                                 $value["idAlmacen"] = "";
                                             }
-                                            
+
                                             if (!isset($value["lote"])) {
 
                                                 $value["lote"] = "";
@@ -232,7 +232,7 @@
                                 <div class="col-3" style="
                                      vertical-align: middle;
                                      ">
-                                    <label style="vertical-align: sub;margin-bottom: 0px;">Sub Total:</label>
+                                    <label style="vertical-align: sub;margin-bottom: 0px;"> <?= lang("newQuote.subTotal") ?>:</label>
                                 </div>
 
                                 <div class="col-2">
@@ -255,7 +255,7 @@
                                      ">
                                     <label style="
                                            vertical-align: sub;
-                                           ">Impuesto:</label>
+                                           "> <?= lang("newQuote.tax") ?>:</label>
                                 </div>
 
                                 <div class="col-2">
@@ -277,7 +277,7 @@
                                      ">
                                     <label style="
                                            vertical-align: sub;
-                                           ">Retencion IVA:</label>
+                                           "> <?= lang("newQuote.VATWithholding") ?></label>
                                 </div>
 
                                 <div class="col-2">
@@ -300,7 +300,7 @@
                                      ">
                                     <label style="
                                            vertical-align: sub;
-                                           ">Retencion ISR:</label>
+                                           "><?= lang("newQuote.ISRWithholding") ?>:</label>
                                 </div>
 
                                 <div class="col-2">
@@ -322,7 +322,7 @@
                                      ">
                                     <label style="
                                            vertical-align: sub;
-                                           ">Total:</label>
+                                           "><?= lang("quotes.total") ?>:</label>
                                 </div>
 
                                 <div class="col-2">
@@ -336,10 +336,10 @@
 
 
                             <button type="button" class="btn btn-primary pull-right btnSaveQuote" data-toggle="modal">
-                                <i class="fa far fa-save"> </i>Guardar</button>
+                                <i class="fa far fa-save"> </i> <?= lang("newQuote.save") ?></button>
 
                             <button type="button" class="btn bg-maroon btnPrint" data-toggle="modal" required="" data-placement="top" title="Imprimir">
-                                <i class="fa fa-print"> </i> Guardar e Imprimir
+                                <i class="fa fa-print"> </i> <?= lang("newQuote.savePrintClose") ?>
                             </button>
 
                         </div>
@@ -606,7 +606,7 @@
 
             Toast.fire({
                 icon: 'error',
-                title: "Tiene que seleccionar la empresa"
+                title: "<?= lang("newQuote.needCaptureCompanie") ?>"
             });
 
             return false;
@@ -617,7 +617,7 @@
 
             Toast.fire({
                 icon: 'error',
-                title: "Tiene que seleccionar un cliente"
+                title: "<?= lang("newQuote.needCaptureCustumer") ?>"
             });
 
             return false;
@@ -628,7 +628,7 @@
 
             Toast.fire({
                 icon: 'error',
-                title: "Tiene que seleccionar una sucursal"
+                title: "<?= lang("newQuote.needCapturaBranchOffice") ?>"
             });
 
             return false;
@@ -640,7 +640,7 @@
 
             Toast.fire({
                 icon: 'error',
-                title: "Tiene que agregar al menos un producto"
+                title: "<?= lang("newQuote.needCapturaProductos") ?>"
             });
 
             return false;

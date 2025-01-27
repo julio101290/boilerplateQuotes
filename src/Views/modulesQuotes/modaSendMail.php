@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Envio Correo</h5>
+                <h5 class="modal-title"><?= lang("quotes.sendEMail") ?></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -12,7 +12,7 @@
                 <form id="form-paciente" class="form-horizontal">
 
                     <div class="form-group row">
-                        <label for="inputName" class="col-sm-2 col-form-label">Correos</label>
+                        <label for="inputName" class="col-sm-2 col-form-label"><?= lang("quotes.emailsListos") ?></label>
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -25,7 +25,7 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="inputName" class="col-sm-2 col-form-label">UUID</label>
+                        <label for="inputName" class="col-sm-2 col-form-label"><?= lang("quotes.emailsLista") ?></label>
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -40,7 +40,7 @@
 
 
                     <div class="form-group row">
-                        <label for="tireType" class="col-sm-2 col-form-label">Folio Cotizacion</label>
+                        <label for="tireType" class="col-sm-2 col-form-label"><?= lang("quotes.folioQuote") ?></label>
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -59,7 +59,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"><?= lang('boilerplate.global.close') ?></button>
-                <button type="button" class="btn btn-primary btn-sm btnSendMailConfirm" id="btnSaveVehicle">Enviar</button>
+                <button type="button" class="btn btn-primary btn-sm btnSendMailConfirm" id="btnSaveVehicle"><?= lang('quotes.sendEMail') ?></button>
             </div>
         </div>
     </div>

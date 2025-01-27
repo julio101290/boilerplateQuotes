@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Seleccione Articulo</h5>
+                <h5 class="modal-title"><?= lang("newQuote.productSelect") ?></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -15,12 +15,12 @@
                             <table id="table-products" class="table table-striped table-hover va-middle tableProducts">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
-                                        <th>Descripcion</th>
-                                        <th>Lote</th>
-                                        <th>Almacen</th>
-                                        <th>Stock</th>
-                                        <th>Acciones</th>
+                                        <th><?= lang("newQuote.productsRow") ?></th>
+                                        <th><?= lang("newQuote.productsDescription") ?></th>
+                                        <th><?= lang("newQuote.productsBatch") ?></th>
+                                        <th><?= lang("newQuote.productsStorage") ?></th>
+                                        <th><?= lang("newQuote.productsStock") ?></th>
+                                        <th><?= lang("newQuote.productsActions") ?></th>
                                     </tr>
                                 </thead>
                                 <tbody>

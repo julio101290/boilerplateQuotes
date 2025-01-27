@@ -34,7 +34,7 @@
 
                 <a href="<?= base_url("admin/newQuotes") ?>" class="btn btn-primary btnAddCustumers" data-target="#modalAddCustumers"><i class="fa fa-plus"></i>
 
-                    Nueva Cotizacion
+                   <?= lang("quotes.add") ?>
 
                 </a>
 
@@ -51,39 +51,39 @@
 
                                 <th>#</th>
                                 <th>
-                                    Cliente
+                                    <?= lang("quotes.fields.custumer") ?>
                                 </th>
                                 <th>
-                                    Fecha
-                                </th>
-
-                                <th>
-                                    Fecha Vencimiento
-                                </th>
-                                <th>
-                                    SubTotal
-                                </th>
-                                <th>
-                                    Impuesto
-                                </th>
-                                <th>
-                                    Total
-                                </th>
-                                <th>
-                                    Tiempo Entrega
-                                </th>
-                                <th>
-                                    Creado
-                                </th>
-                                <th>
-                                    Modificado
-                                </th>
-                                <th>
-                                    Eliminado
+                                    <?= lang("quotes.fields.date") ?>
                                 </th>
 
                                 <th>
-                                    Acciones
+                                    <?= lang("quotes.fields.expirationDate") ?>
+                                </th>
+                                <th>
+                                    <?= lang("quotes.fields.subTotal") ?>
+                                </th>
+                                <th>
+                                    <?= lang("quotes.fields.tax") ?>
+                                </th>
+                                <th>
+                                    <?= lang("quotes.fields.total") ?>
+                                </th>
+                                <th>
+                                    <?= lang("quotes.fields.timeDelevery") ?>
+                                </th>
+                                <th>
+                                    <?= lang("quotes.fields.created_at") ?>
+                                </th>
+                                <th>
+                                    <?= lang("quotes.fields.updated_at") ?>
+                                </th>
+                                <th>
+                                     <?= lang("quotes.fields.deleted_at") ?>
+                                </th>
+
+                                <th>
+                                    <?= lang("quotes.fields.actions") ?>
                                 </th>
 
                             </tr>
