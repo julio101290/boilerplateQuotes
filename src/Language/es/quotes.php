@@ -9,32 +9,22 @@ $quotes["edit"] = "Editar cotizacion";
 $quotes["createEdit"] = "Crear / Editar";
 $quotes["title"] = "Admon. Cotizaciones";
 $quotes["subtitle"] = "Lista de Cotizaciones";
-
 $quotes["companie"] = "Empresa";
 $quotes["custumer"] = "Cliente ";
-$quotes["allCustumer"] = "Todos los Clientes ";
-
-$quotes["allSells"] = "Todas las ventas";
-$quotes["pendingPayment"] = "RFC Emisor";
-
 $quotes["fields"]["row"] = "#";
 $quotes["fields"]["folio"] = "Folio";
 $quotes["fields"]["custumer"] = "Cliente";
 $quotes["fields"]["date"] = "Fecha";
 $quotes["fields"]["expirationDate"] = "Fecha Vencimiento";
-
 $quotes["fields"]["subTotal"] = "Sub Total";
 $quotes["fields"]["tax"] = "Impuesto";
 $quotes["fields"]["total"] = "Total";
 $quotes["fields"]["pending"] = " Pendiente";
-
 $quotes["fields"]["timeDelevery"] = "Tiempo Entrega";
-
 $quotes["fields"]["created_at"] = "Creado";
 $quotes["fields"]["deleted_at"] = "Eliminado";
 $quotes["fields"]["updated_at"] = "Actualizado";
 $quotes["fields"]["actions"] = "Acciones";
-
 $quotes["sendEMail"] = "Envio Correo";
 $quotes["emailsLista"] = "Correos";
 $quotes["folioQuote"] = "Folio Cotizacion";
