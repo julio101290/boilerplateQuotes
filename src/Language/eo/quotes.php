@@ -29,6 +29,6 @@ $quotes["sendEMail"] = "Sendi Retpoŝton";
 $quotes["emailsLista"] = "Retpoŝtoj";
 $quotes["folioQuote"] = "Folio de Propono";
 $quotes["sendEMail"] = "Sendi Retpoŝton";
-
+$quotes["total"] = "Totale";
 
 return $quotes;

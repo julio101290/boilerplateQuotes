@@ -29,6 +29,7 @@ $quotes["sendEMail"] = "Envio Correo";
 $quotes["emailsLista"] = "Correos";
 $quotes["folioQuote"] = "Folio Cotizacion";
 $quotes["sendEMail"] = "Enviar Correo";
+$quotes["total"] = "Total";
 
 
 return $quotes;
