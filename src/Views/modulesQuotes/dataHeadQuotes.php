@@ -624,15 +624,15 @@
 
         }
 
-        if (idSucursal == 0 || idSucursal == "") {
 
+
+        if (!idSucursal || idSucursal === "0") {
             Toast.fire({
                 icon: 'error',
-                title: "<?= lang("newQuote.needCapturaBranchOffice") ?>"
+                title: "<?= lang('newQuote.needCapturaBranchOffice') ?>"
             });
 
             return false;
-
         }
 
 

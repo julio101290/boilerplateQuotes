@@ -90,7 +90,7 @@
         },
         columnDefs: [{
                 orderable: false,
-                targets: [2],
+                targets: [0,1,2,3,4],
                 searchable: false,
                 targets: [2]
 

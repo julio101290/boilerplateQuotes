@@ -34,7 +34,7 @@
 
                 <a href="<?= base_url("admin/newQuotes") ?>" class="btn btn-primary btnAddCustumers" data-target="#modalAddCustumers"><i class="fa fa-plus"></i>
 
-                   <?= lang("quotes.add") ?>
+                    <?= lang("quotes.add") ?>
 
                 </a>
 
@@ -51,8 +51,18 @@
 
                                 <th>#</th>
                                 <th>
-                                    <?= lang("quotes.fields.custumer") ?>
+                                    <?= lang("quotes.fields.firstname") ?>
                                 </th>
+
+                                <th>
+                                    <?= lang("quotes.fields.lastname") ?>
+                                </th>
+
+
+                                <th>
+                                    <?= lang("quotes.fields.razonSocial") ?>
+                                </th>
+
                                 <th>
                                     <?= lang("quotes.fields.date") ?>
                                 </th>
@@ -79,7 +89,7 @@
                                     <?= lang("quotes.fields.updated_at") ?>
                                 </th>
                                 <th>
-                                     <?= lang("quotes.fields.deleted_at") ?>
+                                    <?= lang("quotes.fields.deleted_at") ?>
                                 </th>
 
                                 <th>
@@ -122,19 +132,26 @@
             dataType: "json"
         },
         columnDefs: [{
-            orderable: false,
-            targets: [10],
-            searchable: false,
-            targets: [10]
+                orderable: false,
+                targets: [13],
+                searchable: false,
+                targets: [13]
 
-        }],
+            }],
         columns: [{
                 'data': 'id'
             },
 
+            {
+                'data': 'firstname'
+            },
 
             {
-                'data': 'nameCustumer'
+                'data': 'lastname'
+            },
+
+            {
+                'data': 'razonSocial'
             },
 
             {
@@ -175,9 +192,7 @@
 
             {
 
-
-
-                "data": function(data) {
+                "data": function (data) {
 
                     if (data.idSell > 0) {
 
@@ -211,10 +226,10 @@
 
 
     /*=============================================
-      ENVIAR CORREO  
+     ENVIAR CORREO  
      =============================================*/
 
-    $(".tableQuotes").on("click", '.btnSendMail', function() {
+    $(".tableQuotes").on("click", '.btnSendMail', function () {
 
         var uuid = $(this).attr("uuid");
         var folio = $(this).attr("folio");
@@ -232,10 +247,10 @@
 
 
     /*=============================================
-  IMPRIMIR COTIZACIÓN
-  =============================================*/
+     IMPRIMIR COTIZACIÓN
+     =============================================*/
 
-    $(".tableQuotes").on("click", '.btnImprimirCotizacion', function() {
+    $(".tableQuotes").on("click", '.btnImprimirCotizacion', function () {
 
         var uuid = $(this).attr("uuid");
 
@@ -248,50 +263,50 @@
     /*=============================================
      DELETE QUOTES
      =============================================*/
-    $(".tableQuotes").on("click", ".btn-delete", function() {
+    $(".tableQuotes").on("click", ".btn-delete", function () {
 
         var idQuote = $(this).attr("data-id");
 
         Swal.fire({
-                title: '<?= lang('boilerplate.global.sweet.title') ?>',
-                text: "<?= lang('boilerplate.global.sweet.text') ?>",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: '<?= lang('boilerplate.global.sweet.confirm_delete') ?>'
-            })
-            .then((result) => {
-                if (result.value) {
-                    $.ajax({
-                        url: `<?= base_url('admin/quotes') ?>/` + idQuote,
-                        method: 'DELETE',
-                    }).done((data, textStatus, jqXHR) => {
-                        Toast.fire({
-                            icon: 'success',
-                            title: jqXHR.statusText,
-                        });
+            title: '<?= lang('boilerplate.global.sweet.title') ?>',
+            text: "<?= lang('boilerplate.global.sweet.text') ?>",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '<?= lang('boilerplate.global.sweet.confirm_delete') ?>'
+        })
+                .then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: `<?= base_url('admin/quotes') ?>/` + idQuote,
+                            method: 'DELETE',
+                        }).done((data, textStatus, jqXHR) => {
+                            Toast.fire({
+                                icon: 'success',
+                                title: jqXHR.statusText,
+                            });
 
 
-                        tableQuotes.ajax.reload();
-                    }).fail((error) => {
-                        Toast.fire({
-                            icon: 'error',
-                            title: error.responseJSON.messages.error,
-                        });
-                    })
-                }
-            })
+                            tableQuotes.ajax.reload();
+                        }).fail((error) => {
+                            Toast.fire({
+                                icon: 'error',
+                                title: error.responseJSON.messages.error,
+                            });
+                        })
+                    }
+                })
     })
 
-    $(function() {
+    $(function () {
         //  $("#modalAddCustumers").draggable();
 
     });
 
 
 
-    $(function() {
+    $(function () {
 
         var start = moment().subtract(29, 'days');
         var end = moment();

@@ -12,7 +12,7 @@ use julio101290\boilerplatequotes\Models\QuotesDetailsModel;
 use CodeIgniter\API\ResponseTrait;
 use julio101290\boilerplatecompanies\Models\EmpresasModel;
 use julio101290\boilerplatecustumers\Models\CustumersModel;
-use  julio101290\boilerplatebranchoffice\Models\BranchofficesModel;
+use julio101290\boilerplatebranchoffice\Models\BranchofficesModel;
 
 class QuotesController extends BaseController {
 
@@ -435,23 +435,32 @@ class QuotesController extends BaseController {
             $ultimoFolio = $this->getLastCodeInterno($datos["idEmpresa"], $datos["idSucursal"]);
 
             $datos["folio"] = $ultimoFolio;
+            $datos["idSell"] = "0";
 
             try {
 
 
-                if ($this->Quotes->save($datos) === false) {
 
-                    $errores = $this->Quotes->errors();
 
-                    $listErrors = "";
 
-                    foreach ($errores as $field => $error) {
+                try {
+                    if ($this->Quotes->insert($datos) === false) {
 
-                        $listErrors .= $error . " ";
+                        // Captura errores de validación
+                        $errores = $this->Quotes->errors();
+
+                        $listErrors = "Errores al insertar:\n";
+                        foreach ($errores as $field => $error) {
+                            $listErrors .= "- [$field] $error\n";
+                        }
+
+                        // Puedes usar log_message('error', ...) si prefieres registrar
+                        echo nl2br($listErrors);
+                        return;
                     }
-
-                    echo $listErrors;
-
+                } catch (\Exception $e) {
+                    // Captura excepciones que no están relacionadas a la validación (por ejemplo: problemas con la base de datos)
+                    echo "Excepción al insertar: " . $e->getMessage();
                     return;
                 }
 
