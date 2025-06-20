@@ -163,48 +163,53 @@ class QuotesModel extends Model {
      * Obtener Cotización por UUID
      */
     public function mdlGetQuoteUUID($uuid, $empresas) {
+        $dbDriver = $this->db->getPlatform(); // Detecta si es MySQL o PostgreSQL
+        // Nombre completo del cliente según el motor
+        $nameExpression = $dbDriver === 'Postgre' ? "(b.firstname || ' ' || b.lastname) AS \"nameCustumer\"" : "CONCAT(b.firstname, ' ', b.lastname) AS nameCustumer";
 
-        $result = $this->db->table('quotes a, custumers b, empresas c')
-                        ->select('a.idCustumer
-            ,a.idSucursal
-            ,a.folio
-            ,a.quoteTo
-            ,a.UUID
-            ,a.idUser
-            ,a.id
-            ,concat(b.firstname,\' \',b.lastname) as nameCustumer
-            ,b.firstname as firstname
-            ,b.lastname as lastname
-            ,b.lastname as lastname
-            ,b.razonSocial as razonSocial
-            ,a.idEmpresa
-            ,c.nombre as nombreEmpresa
-            ,a.listProducts
-            ,a.date
-            ,a.dateVen
-            ,a.total
-            ,a.taxes
-            ,a.IVARetenido
-            ,a.ISRRetenido
-            ,a.subTotal
-
-            ,a.RFCReceptor
-            ,a.usoCFDI
-            ,a.metodoPago
-            ,a.formaPago
-            ,a.razonSocialReceptor
-            ,a.codigoPostalReceptor
-            ,a.regimenFiscalReceptor
-
-            ,a.delivaryTime
-            ,a.idSell
-            ,a.generalObservations
-            ,a.created_at,a.updated_at,a.deleted_at')
-                        ->where('a.idCustumer', 'b.id', FALSE)
-                        ->where('a.idEmpresa', 'c.id', FALSE)
-                        ->where('UUID', $uuid)
-                        ->whereIn('a.idEmpresa', $empresas)
-                        ->get()->getRowArray();
+        $result = $this->db->table('quotes a')
+                ->select("
+            a.idCustumer,
+            a.idSucursal,
+            a.folio,
+            a.quoteTo,
+            a.UUID,
+            a.idUser,
+            a.id,
+            {$nameExpression},
+            b.firstname AS firstname,
+            b.lastname AS lastname,
+            b.razonSocial AS razonSocial,
+            a.idEmpresa,
+            c.nombre AS nombreEmpresa,
+            a.listProducts,
+            a.date,
+            a.dateVen,
+            a.total,
+            a.taxes,
+            a.IVARetenido,
+            a.ISRRetenido,
+            a.subTotal,
+            a.RFCReceptor,
+            a.usoCFDI,
+            a.metodoPago,
+            a.formaPago,
+            a.razonSocialReceptor,
+            a.codigoPostalReceptor,
+            a.regimenFiscalReceptor,
+            a.delivaryTime,
+            a.idSell,
+            a.generalObservations,
+            a.created_at,
+            a.updated_at,
+            a.deleted_at
+        ")
+                ->join('custumers b', 'a.idCustumer = b.id', 'inner')
+                ->join('empresas c', 'a.idEmpresa = c.id', 'inner')
+                ->where('a.UUID', $uuid)
+                ->whereIn('a.idEmpresa', $empresas)
+                ->get()
+                ->getRowArray();
 
         return $result;
     }

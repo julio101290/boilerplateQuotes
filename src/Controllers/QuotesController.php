@@ -392,7 +392,9 @@ class QuotesController extends BaseController {
         $titulos["razonSocialReceptor"] = $quote["razonSocialReceptor"];
         $titulos["codigoPostalReceptor"] = $quote["codigoPostalReceptor"];
         $titulos["folioComprobanteRD"] = "0";
-
+        $titulos["uuidRelacion"] = "";
+        $titulos["totalExento"] = "";
+        
         $titulos["idSucursal"] = $quote["idSucursal"];
         $sucursal = $this->sucursales->select("*")->where("id", $titulos["idSucursal"])->first();
         $titulos["nombreSucursal"] = $sucursal["key"] . " " . $sucursal["name"];
@@ -720,7 +722,7 @@ class QuotesController extends BaseController {
 
         $pdf = new PDFLayoutQuotes(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
-        $dataQuote = $this->Quotes->where("uuid", $uuid)->first();
+        $dataQuote = $this->Quotes->where("UUID", $uuid)->first();
 
         $listProducts = json_decode($dataQuote["listProducts"], true);
 
