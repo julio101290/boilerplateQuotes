@@ -66,10 +66,22 @@ class QuotesController extends BaseController {
 
         if ($this->request->isAJAX()) {
 
+            $params = [
+                'draw' => $this->request->getGet('draw'),
+                'start' => $this->request->getGet('start'),
+                'length' => $this->request->getGet('length'),
+                'order' => $this->request->getGet('order'),
+                'columns' => $this->request->getGet('columns'),
+            ];
 
-            $datos = $this->Quotes->mdlGetQuotes($empresasID);
+            $result = $this->Quotes->mdlGetQuotes($empresasID, $params);
 
-            return \Hermawan\DataTables\DataTable::of($datos)->toJson(true);
+            return $this->response->setJSON([
+                        'draw' => intval($params['draw']),
+                        'recordsTotal' => $result['recordsTotal'],
+                        'recordsFiltered' => $result['recordsFiltered'],
+                        'data' => $result['data'],
+            ]);
         }
 
 
@@ -106,10 +118,24 @@ class QuotesController extends BaseController {
 
         if ($this->request->isAJAX()) {
 
+            $params = [
+                'draw' => $this->request->getGet('draw'),
+                'start' => $this->request->getGet('start'),
+                'length' => $this->request->getGet('length'),
+                'order' => $this->request->getGet('order'),
+                'columns' => $this->request->getGet('columns'),
+            ];
 
-            $datos = $this->Quotes->mdlGetQuotesFilters($empresasID, $desdeFecha, $hastaFecha);
+            $datos = $this->Quotes->mdlGetQuotesFilters($empresasID, $desdeFecha, $hastaFecha, $params);
 
-            return \Hermawan\DataTables\DataTable::of($datos)->toJson(true);
+          
+            
+            return $this->response->setJSON([
+                        'draw' => intval($this->request->getGet('draw')),
+                        'recordsTotal' => $datos["recordsTotal"],
+                        'recordsFiltered' =>  $datos["recordsFiltered"],
+                        'data' => $datos["data"],
+            ]);
         }
     }
 
@@ -392,13 +418,14 @@ class QuotesController extends BaseController {
         $titulos["razonSocialReceptor"] = $quote["razonSocialReceptor"];
         $titulos["codigoPostalReceptor"] = $quote["codigoPostalReceptor"];
         $titulos["folioComprobanteRD"] = "0";
-        $titulos["uuidRelacion"] = "";
-        $titulos["totalExento"] = "";
-        
+
         $titulos["idSucursal"] = $quote["idSucursal"];
         $sucursal = $this->sucursales->select("*")->where("id", $titulos["idSucursal"])->first();
         $titulos["nombreSucursal"] = $sucursal["key"] . " " . $sucursal["name"];
         $titulos["permisoAgregarArticulo"] = $permisoAgregarArticulo;
+
+        $titulos["uuidRelacion"] = "";
+        $titulos["totalExento"] = "";
 
         $titulos["title"] = "Generar Venta";
         $titulos["subtitle"] = "Convierte cotización a venta";

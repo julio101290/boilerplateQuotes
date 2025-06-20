@@ -78,10 +78,11 @@ class QuotesModel extends Model {
     protected $validationMessages = [];
     protected $skipValidation = false;
 
-    public function mdlGetQuotes($empresas) {
-        $result = $this->db->table('quotes a')
-                ->select(
-                        'a.UUID AS UUID,
+public function mdlGetQuotes($empresas, $params = [])
+{
+    $builder = $this->db->table('quotes a')
+        ->select("
+            a.UUID AS UUID,
             a.id AS id,
             b.firstname, 
             b.lastname, 
@@ -107,25 +108,63 @@ class QuotesModel extends Model {
             a.created_at AS created_at,
             a.updated_at AS updated_at,
             a.idSell AS idSell,
-            a.deleted_at AS deleted_at'
-                )
-                ->join('custumers b', 'a.idCustumer = b.id', 'left')
-                ->join('empresas c', 'a.idEmpresa = c.id', 'left')
-                ->whereIn('a.idEmpresa', $empresas);
+            a.deleted_at AS deleted_at
+        ")
+        ->join('custumers b', 'a.idCustumer = b.id', 'left')
+        ->join('empresas c', 'a.idEmpresa = c.id', 'left')
+        ->whereIn('a.idEmpresa', $empresas);
 
-        return $result;
+    // Filtros por columna
+    if (!empty($params['columns'])) {
+        foreach ($params['columns'] as $col) {
+            if (!empty($col['search']['value'])) {
+                $builder->like($col['data'], $col['search']['value']);
+            }
+        }
     }
+
+    // Ordenamiento
+    if (!empty($params['order'])) {
+        foreach ($params['order'] as $ord) {
+            $colIndex = $ord['column'];
+            $dir = $ord['dir'] ?? 'asc';
+            $colName = $params['columns'][$colIndex]['data'];
+            $builder->orderBy($colName, $dir);
+        }
+    }
+
+    // Paginación
+    if (isset($params['length']) && $params['length'] != -1) {
+        $builder->limit($params['length'], $params['start']);
+    }
+
+    $data = $builder->get()->getResultArray();
+
+    // Total sin filtros
+    $total = $this->db->table('quotes a')
+        ->join('custumers b', 'a.idCustumer = b.id', 'left')
+        ->join('empresas c', 'a.idEmpresa = c.id', 'left')
+        ->whereIn('a.idEmpresa', $empresas)
+        ->countAllResults();
+
+    return [
+        'data' => $data,
+        'recordsTotal' => $total,
+        'recordsFiltered' => count($data),
+    ];
+}
+
 
     /**
      * Search by filters
      */
-    public function mdlGetQuotesFilters($empresas, $from, $to) {
-        $result = $this->db->table('quotes a')
+    public function mdlGetQuotesFilters($empresas, $from, $to, $params = []) {
+        $builder = $this->db->table('quotes a')
                 ->select("
             a.UUID AS UUID,
             a.id AS id,
-            b.firstname,
-            b.lastname,
+            b.firstname as firstname,
+            b.lastname as lastname,
             b.razonSocial,
             a.idCustumer AS idCustumer,
             a.folio AS folio,
@@ -156,61 +195,101 @@ class QuotesModel extends Model {
                 ->where('a.date <=', $to . ' 23:59:59')
                 ->whereIn('a.idEmpresa', $empresas);
 
-        return $result;
+        // Filtros por columna
+        if (!empty($params['columns'])) {
+            foreach ($params['columns'] as $col) {
+                if (!empty($col['search']['value'])) {
+                    $builder->like($col['data'], $col['search']['value']);
+                }
+            }
+        }
+
+        // Orden dinámico
+        if (!empty($params['order'])) {
+            foreach ($params['order'] as $ord) {
+                $colIndex = $ord['column'];
+                $dir = $ord['dir'] ?? 'asc';
+                $colName = $params['columns'][$colIndex]['data'];
+                $builder->orderBy($colName, $dir);
+            }
+        }
+
+        // Paginación
+        if (isset($params['length']) && $params['length'] != -1) {
+            $builder->limit($params['length'], $params['start']);
+        }
+
+        $data = $builder->get()->getResultArray();
+
+        // Total sin filtros (para recordsTotal)
+        $total = $this->db->table('quotes a')
+                ->join('custumers b', 'a.idCustumer = b.id', 'left')
+                ->join('empresas c', 'a.idEmpresa = c.id', 'left')
+                ->where('a.date >=', $from . ' 00:00:00')
+                ->where('a.date <=', $to . ' 23:59:59')
+                ->whereIn('a.idEmpresa', $empresas)
+                ->countAllResults();
+
+        return [
+            'data' => $data,
+            'recordsTotal' => $total,
+            'recordsFiltered' => count($data),
+        ];
     }
 
     /**
      * Obtener Cotización por UUID
      */
     public function mdlGetQuoteUUID($uuid, $empresas) {
-        $dbDriver = $this->db->getPlatform(); // Detecta si es MySQL o PostgreSQL
-        // Nombre completo del cliente según el motor
-        $nameExpression = $dbDriver === 'Postgre' ? "(b.firstname || ' ' || b.lastname) AS \"nameCustumer\"" : "CONCAT(b.firstname, ' ', b.lastname) AS nameCustumer";
+        $builder = $this->db->table('quotes a');
 
-        $result = $this->db->table('quotes a')
-                ->select("
-            a.idCustumer,
-            a.idSucursal,
-            a.folio,
-            a.quoteTo,
-            a.UUID,
-            a.idUser,
-            a.id,
-            {$nameExpression},
-            b.firstname AS firstname,
-            b.lastname AS lastname,
-            b.razonSocial AS razonSocial,
-            a.idEmpresa,
-            c.nombre AS nombreEmpresa,
-            a.listProducts,
-            a.date,
-            a.dateVen,
-            a.total,
-            a.taxes,
-            a.IVARetenido,
-            a.ISRRetenido,
-            a.subTotal,
-            a.RFCReceptor,
-            a.usoCFDI,
-            a.metodoPago,
-            a.formaPago,
-            a.razonSocialReceptor,
-            a.codigoPostalReceptor,
-            a.regimenFiscalReceptor,
-            a.delivaryTime,
-            a.idSell,
-            a.generalObservations,
-            a.created_at,
-            a.updated_at,
-            a.deleted_at
-        ")
-                ->join('custumers b', 'a.idCustumer = b.id', 'inner')
-                ->join('empresas c', 'a.idEmpresa = c.id', 'inner')
-                ->where('a.UUID', $uuid)
-                ->whereIn('a.idEmpresa', $empresas)
-                ->get()
-                ->getRowArray();
+        // Detectar motor de base de datos
+        $dbDriver = $this->db->getPlatform(); // 'Postgre' o 'MySQLi'
+        $dbDriver = $this->db->getPlatform();
+        $nameExpression = $dbDriver === 'Postgre' ? '(b.firstname || \' \' || b.lastname) AS "nameCustumer"' : "CONCAT(b.firstname, ' ', b.lastname) AS nameCustumer";
 
-        return $result;
+        $builder->select("
+        a.idCustumer AS idCustumer,
+        a.idSucursal AS idSucursal,
+        a.folio AS folio,
+        a.quoteTo AS quoteTo,
+        a.UUID AS UUID,
+        a.idUser AS idUser,
+        a.id AS id,
+        $nameExpression,
+        b.firstname AS firstname,
+        b.lastname AS lastname,
+        b.razonSocial AS razonSocial,
+        a.idEmpresa AS idEmpresa,
+        c.nombre AS nombreEmpresa,
+        a.listProducts AS listProducts,
+        a.date AS date,
+        a.dateVen AS dateVen,
+        a.total AS total,
+        a.taxes AS taxes,
+        a.IVARetenido AS IVARetenido,
+        a.ISRRetenido AS ISRRetenido,
+        a.subTotal AS subTotal,
+        a.RFCReceptor AS RFCReceptor,
+        a.usoCFDI AS usoCFDI,
+        a.metodoPago AS metodoPago,
+        a.formaPago AS formaPago,
+        a.razonSocialReceptor AS razonSocialReceptor,
+        a.codigoPostalReceptor AS codigoPostalReceptor,
+        a.regimenFiscalReceptor AS regimenFiscalReceptor,
+        a.delivaryTime AS delivaryTime,
+        a.idSell AS idSell,
+        a.generalObservations AS generalObservations,
+        a.created_at AS created_at,
+        a.updated_at AS updated_at,
+        a.deleted_at AS deleted_at
+    "); // 'false' para usar alias y expresiones sin que se escapen
+
+        $builder->join('custumers b', 'a.idCustumer = b.id');
+        $builder->join('empresas c', 'a.idEmpresa = c.id');
+        $builder->where('a.UUID', $uuid);
+        $builder->whereIn('a.idEmpresa', $empresas);
+
+        return $builder->get()->getRowArray();
     }
 }
